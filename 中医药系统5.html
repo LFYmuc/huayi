@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页</title>
+    <style>
+        :root {
+            --primary-color: #8B0000;
+            --secondary-color: #f5f5dc;
+            --font-family: "微软雅黑", Arial, sans-serif;
+        }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--secondary-color);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            display: inline-block;
+        }
+        .content {
+            margin-bottom: 20px;
+        }
+        .code-container {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .run-button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .run-button:hover {
+            background-color: #a52a2a;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <script>
+        function searchSymptoms() {
+            const symptom = document.getElementById("symptomInput").value;
+            const results = document.getElementById("results");
+            results.innerHTML = ""; // Clear previous results
+            const data = [
+                { "病症": "感冒发热", "中药": "金银花15g,连翘10g", "功效": "清热解毒,散风热" },
+                { "病症": "咳嗽痰多", "中药": "桔梗10g,百部10g", "功效": "宣肺化痰,止咳平喘" },
+                { "病症": "头痛头晕", "中药": "川芎10g,白芷10g", "功效": "活血化瘀,祛风止痛" },
+                { "病症": "失眠多梦", "中药": "酸枣仁15g,远志10g", "功效": "安神定志,养心安神" },
+                { "病症": "消化不良", "中药": "神曲10g,麦芽10g", "功效": "健脾和胃,消食化积" },
+                { "病症": "胃脘疼痛", "中药": "元胡10g,木香10g", "功效": "行气止痛,温中散寒" },
+                { "病症": "便秘不畅", "中药": "麻仁15g,枳实10g", "功效": "润肠通便,行气导滞" },
+                { "病症": "腹泻腹痛", "中药": "黄连6g,黄芩10g", "功效": "清热燥湿,泻火解毒" },
+                { "病症": "月经不调", "中药": "当归10g,川芎10g", "功效": "活血调经,养血止痛" },
+                { "病症": "痛经", "中药": "益母草15g,延胡索10g", "功效": "活血化瘀,理气止痛" },
+                { "病症": "带下异常", "中药": "黄柏10g,苍术10g", "功效": "清热燥湿,健脾止带" },
+                { "病症": "阳痿早泄", "中药": "肉苁蓉15g,锁阳10g", "功效": "补肾壮阳,固精止遗" },
+                { "病症": "遗精滑精", "中药": "金樱子15g,芡实15g", "功效": "固精止遗,补肾涩精" },
+                { "病症": "腰痛", "中药": "杜仲15g,续断10g", "功效": "补肝肾,强筋骨" },
+                { "病症": "风湿关节痛", "中药": "独活10g,秦艽10g", "功效": "祛风湿,通经络" },
+                { "病症": "高血压", "中药": "钩藤15g,夏枯草15g", "功效": "平肝潜阳,清热降压" },
+                { "病症": "糖尿病", "中药": "天花粉15g,葛根15g", "功效": "清热生津,滋阴降糖" },
+                { "病症": "冠心病", "中药": "丹参15g,川芎10g", "功效": "活血化瘀,通脉止痛" },
+                { "病症": "慢性支气管炎", "中药": "枇杷叶15g,百部10g", "功效": "清肺化痰,止咳平喘" },
+                { "病症": "慢性胃炎", "中药": "黄连6g,黄芩10g", "功效": "清热燥湿,泻火解毒" },
+                { "病症": "慢性肾炎", "中药": "茯苓15g,泽泻15g", "功效": "利水渗湿,健脾补肾" },
+                { "病症": "慢性肝炎", "中药": "茵陈15g,柴胡10g", "功效": "清肝泻火,疏肝解郁" },
+                { "病症": "甲状腺肿大", "中药": "海藻15g,昆布15g", "功效": "软坚散结,利水消肿" },
+                { "病症": "贫血", "中药": "当归10g,黄芪15g", "功效": "补气养血,调经止痛" },
+                { "病症": "失眠多梦", "中药": "龙骨15g,牡蛎15g", "功效": "安神定志,镇心安神" },
+                { "病症": "神经衰弱", "中药": "远志10g,酸枣仁15g", "功效": "安神定志,养心安神" },
+                { "病症": "慢性咽炎", "中药": "桔梗10g,甘草6g", "功效": "清肺利咽,化痰止咳" },
+                { "病症": "慢性鼻炎", "中药": "辛夷10g,白芷10g", "功效": "通鼻开窍,祛风止痛" },
+                { "病症": "口腔溃疡", "中药": "黄连6g,甘草6g", "功效": "清热解毒,消炎止痛" },
+                { "病症": "皮肤湿疹", "中药": "地肤子15g,白鲜皮15g", "功效": "清热解毒,祛湿止痒" }
+            ];
+            const filtered = data.filter(item => item.病症.includes(symptom));
+            if (filtered.length > 0) {
+                filtered.forEach(item => {
+                    results.innerHTML += `<p><strong>病症:</strong> ${item.病症} <br> <strong>中药:</strong> ${item.中药} <br> <strong>功效:</strong> ${item.功效}</p>`;
+                });
+            } else {
+                results.innerHTML = "<p>未找到相关病症。</p>";
+            }
+        }
+    </script>
+</head>
+<body>
+
+<header>
+        <h1>华医正道</h1>
+        <p>欢迎来到我们的主页</p >
+ </header>
+
+<div class="container">
+        <section class="intro-section">
+            <h2>团队简介</h2>
+            <p>我们的创业团队由一群朝气蓬勃、富有创新精神和探索能力的高校大学生组成。希望通过团队共同努力，致力于中医药的发展。</p>
+        </section>
+        <section class="input-section">
+            <h2>您的身体情况</h2>
+            <p>请如实填写您的身体情况，以便我们能提供准确的治疗方案。</p>
+            <input type="text" id="symptomInput" placeholder="请输入关键词（例如：习惯性便秘）">
+            <button onclick="searchSymptoms()">开始</button>
+        </section>
+        <section class="result-section">
+            <h2>查询结果</h2>
+            <div id="results"></div>
+        </section>
+        <section class="database-section">
+            <h2>病症举例</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>病症</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>感冒发热</td></tr>
+                    <tr><td>2</td><td>咳嗽痰多</td></tr>
+                    <tr><td>3</td><td>头痛头晕</td></tr>
+                    <tr><td>4</td><td>失眠多梦</td></tr>
+                    <tr><td>5</td><td>消化不良</td></tr>
+                    <tr><td>6</td><td>胃脘疼痛</td></tr>
+                    <tr><td>7</td><td>便秘不畅</td></tr>
+                    <tr><td>8</td><td>腹泻腹痛</td></tr>
+                    <tr><td>9</td><td>月经不调</td></tr>
+                    <tr><td>10</td><td>痛经</td></tr>
+                    <tr><td>11</td><td>带下异常</td></tr>
+                    <tr><td>12</td><td>阳痿早泄</td></tr>
+                    <tr><td>13</td><td>遗精滑精</td></tr>
+                    <tr><td>14</td><td>腰痛</td></tr>
+                    <tr><td>15</td><td>风湿关节痛</td></tr>
+                    <tr><td>16</td><td>高血压</td></tr>
+                    <tr><td>17</td><td>糖尿病</td></tr>
+                    <tr><td>18</td><td>冠心病</td></tr>
+                    <tr><td>19</td><td>慢性支气管炎</td></tr>
+                    <tr><td>20</td><td>慢性胃炎</td></tr>
+                    <tr><td>21</td><td>慢性肾炎</td></tr>
+                    <tr><td>22</td><td>慢性肝炎</td></tr>
+                    <tr><td>23</td><td>甲状腺肿大</td></tr>
+                    <tr><td>24</td><td>贫血</td></tr>
+                    <tr><td>25</td><td>失眠多梦</td></tr>
+                    <tr><td>26</td><td>神经衰弱</td></tr>
+                    <tr><td>27</td><td>慢性咽炎</td></tr>
+                    <tr><td>28</td><td>慢性鼻炎</td></tr>
+                    <tr><td>29</td><td>口腔溃疡</td></tr>
+                    <tr><td>30</td><td>皮肤湿疹</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>
+
+
